@@ -1,0 +1,86 @@
+{
+	"New Boolean Setting":{
+		"prefix": "setbl",
+		"body": [
+			"set ${1|allow-duplicate-recipes,dotenv-filename,dotenv-load,dotenv-path,export,fallback,ignore-comments,positional-arguments,windows-powershell|}"
+		],
+		"description": "New Boolean Setting"
+	},
+	"New String Setting":{
+		"prefix": "setstr",
+		"body": [
+			"set ${1|dotenv-filename,dotenv-path,tempdir|} := \"$2\""
+		],
+		"description": "New String Setting"
+	},
+	"Shell Setting":{
+		"prefix": "setsh",
+		"body": [
+			"set ${1|shell,windows-shell|} := [\"${2|bash,pwsh,zsh,sh,fish,nu,powershell|}\"]"
+		],
+		"description": "Set the command used to invoke recipes and evaluate backticks."
+	},
+	"New Recipe": {
+		"prefix": "nrcp",
+		"body": [
+			"$1:",
+			"\t$2"
+		],
+		"description": "New Recipe"
+	},
+	"New Slient Recipe": {
+		"prefix": "nsrcp",
+		"body": [
+			"@$1:",
+			"\t$2"
+		],
+		"description": "New Slient Recipe"
+	},
+	"New Bash Recipe": {
+		"prefix": "nbrcp",
+		"body": [
+			"$1:",
+			"\t#!/usr/bin/env bash",
+			"\tset -euxo pipefail",
+			"\t",
+			"\t$2"
+		],
+		"description": "New Bash Recipe"
+	},
+	"New Python Recipe": {
+		"prefix": "nprcp",
+		"body": [
+			"$1:",
+			"\t#!/usr/bin/env python3",
+			"\t$2"
+		],
+		"description": "New Bash Recipe"
+	},
+	"New Lua Recipe": {
+		"prefix": "nlrcp",
+		"body": [
+			"$1:",
+			"\t#!/usr/bin/env lua",
+			"\t$2"
+		],
+		"description": "New Lua Recipe"
+	},
+	"New Perl Recipe": {
+		"prefix": "npercp",
+		"body": [
+			"$1:",
+			"\t#!/usr/bin/env perl",
+			"\t$2"
+		],
+		"description": "New Perl Recipe"
+	},
+	"New Ruby Recipe": {
+		"prefix": "nrrcp",
+		"body": [
+			"$1:",
+			"\t#!/usr/bin/env ruby",
+			"\t$2"
+		],
+		"description": "New Ruby Recipe"
+	}
+}

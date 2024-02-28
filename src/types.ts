@@ -1,3 +1,5 @@
+import { JustDump, RecipeDump } from "./types-json";
+
 /**
  * A runnable just recipe.
  */
@@ -10,6 +12,32 @@ export interface Recipe {
    * A description of what the recipe does.
    */
   description?: string
+
+  justfile?: string
+
+  arguments?: Array<Argument>
+
+  variables?: Variable
+}
+
+export interface Argument {
+  name: string
+  value?: string
+}
+
+export interface Variable {
+  [s: string]: string
+}
+
+export interface GetRecipesError {
+  kind: 'no-recipes' | 'no-just-file' | 'no-just' | 'multiple-candidate' | 'just-parse-error' | 'unknown'
+  stdout?: string
+  stderr?: string
+}
+
+export interface GetRecipesOK {
+  kind: 'ok'
+  recipes: Recipe[]
 }
 
 /**
@@ -23,10 +51,7 @@ export type RunRecipeResult =
 /**
  * The types of results you can get from calling getCommands.
  */
-export type GetRecipesResult =
-  | { kind: 'ok'; recipes: Recipe[] }
-  | { kind: 'no-recipes' }
-  | { kind: 'no-just-file' }
-  | { kind: 'no-just' }
-  | { kind: 'just-parse-error' }
-  | { kind: 'unknown' }
+export type GetRecipesResult = GetRecipesOK
+  | GetRecipesError
+
+export { JustDump, RecipeDump };

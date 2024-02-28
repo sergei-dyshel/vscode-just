@@ -1,0 +1,272 @@
+$schema: https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
+name: Just
+patterns:
+  - include: "#interpolate"
+  - include: "#comments"
+  # - include: '#body'
+  - include: "#strings"
+  - include: "#assignments"
+  - include: "#alias"
+  - include: "#recipeDefinition"
+  - include: "#functions"
+  - include: "#settings"
+  - include: "#attributes"
+  - include: "#scripts"
+  # - name: keyword.control.shebang
+  #   begin: '#!'
+  #   end: '$'
+  - name: keyword.control.justfile
+    match: "\\b(else|export|false|if|true)\\b"
+  - name: keyword.operator.justfile
+    match: "\\B(:=|==|&&|\\+|/)\\B"
+repository:
+  comments:
+    patterns:
+      - name: comment.line.justfile
+        match: ^#[^!].*
+  # body:
+  #   patterns:
+  #     - name: constant.other.justfile
+  #       begin: (^|\G)[\s\t]+
+  #       end: (^|\G)[\r\n]+$
+  strings:
+    patterns:
+      - name: string.quoted.indented_double.justfile
+        begin: '"""'
+        end: '"""'
+      - name: string.quoted.indented_single.justfile
+        begin: "'''"
+        end: "'''"
+      - name: string.quoted.double.justfile
+        begin: '"'
+        end: '"'
+      - name: string.quoted.single.justfile
+        begin: "'"
+        end: "'"
+  assignments:
+    patterns:
+      - match: ^(export\s+)?([a-zA-Z_][a-zA-Z0-9_-]*)\s*(:=)\s*([a-zA-Z_][a-zA-Z0-9_-]*)
+        captures:
+          "1":
+            name: keyword.control.justfile
+          "2":
+            name: variable.name.justfile
+          "3":
+            name: keyword.operator.justfile
+          "4":
+            name: variable.name.justfile
+  alias:
+    patterns:
+      - match: ^(alias)\s+([a-zA-Z_][a-zA-Z0-9_-]*)\s*(:=)\s*([a-zA-Z_][a-zA-Z0-9_-]*)
+        captures:
+          "1":
+            name: keyword.control.justfile
+          "2":
+            name: variable.name.justfile
+          "3":
+            name: keyword.operator.justfile
+          "4":
+            name: variable.name.justfile
+  recipeDefinition:
+    patterns:
+      - match: >-
+          ^(@?[a-zA-Z_][a-zA-Z0-9_-]*)(\s+[a-zA-Z_][a-zA-Z0-9=\s_-`'"\{\}]*)*(\s+[\+\*]?[a-zA-Z_][a-zA-Z0-9=\s_-`'"\{\}]*)?:(\s*[a-zA-Z_][\sa-zA-Z0-9_-]*)*\s*$
+        captures:
+          "1":
+            name: support.type.property-name.justfile
+          "2":
+            name: entity.name.function.justfile
+          "3":
+            name: entity.name.function.justfile
+            patterns:
+              - name: constant.character.escape.justfile
+                match: '\s+(\*|\+)?([a-zA-Z_][a-zA-Z0-9-_]*)(=?)([^\r\n]*)'
+                captures:
+                  "0":
+                    name: variable.name.justfile
+                  "2":
+                    name: variable.parameter.justfile
+                  "3":
+                    name: keyword.operator.justfile
+                  "4":
+                    name: variable.parameter.justfile
+          "4":
+            name: support.type.property-name.justfile
+        name: emphasis
+  interpolate:
+    patterns:
+      - name: string.interpolated.justfile
+        begin: \{\{
+        end: \}\}
+        contentName: string.interpolated.justfile
+  functions:
+    patterns:
+      - name: support.function.justfile.nullary
+        match: \b(arch|invocation_directory|invocation_directory_native|just_executable|justfile|justfile_directory|num_cpus|os|os_family|uuid)\b\s*\(\s*\)
+      - name: support.function.justfile.unary
+        match: \b(absolute_path|capitalize|clean|env_var|error|kebabcase|lowercamelcase|lowercase|parent_directory|path_exists|quote|extension|file_name|file_stem|sha256|sha256_file|shoutykebabcase|shoutysnakecase|snakecase|titlecase|trim|trim_end|trim_start|uppercamelcase|uppercase|without_extension)\b
+      - name: support.function.justfile.binary
+        match: \b(env_var_or_default|semver_matches|trim_end_match|trim_end_matches|trim_start_match|trim_start_matches)\b
+      - name: support.function.justfile.ternary
+        match: \b(replace|replace_regex)\b
+      - name: support.function.justfile.other
+        match: \b(env|join)\b
+  settings:
+    patterns:
+      - match: "(set)\\s+(allow\\-duplicate\\-recipes|dotenv\\-filename|dotenv\\-load|dotenv\\-path|export|fallback|ignore\\-comments|positional\\-arguments|windows\\-powershell)(\\s*:=\\s*)?"
+        captures:
+          "1":
+            name: keyword.control.justfile
+          "2":
+            name: keyword.other.boolean.justfile
+      - match: "(set)\\s+*(dotenv\\-filename|dotenv\\-path|tempdir)\\s*+:=\\s*"
+        captures:
+          "1":
+            name: keyword.control.justfile
+          "2":
+            name: keyword.other.string.justfile
+      - match: "(set)\\s+(shell|windows\\-shell)\\s*+:=\\s*"
+        captures:
+          "1":
+            name: keyword.control.justfile
+          "2":
+            name: keyword.other.shell.justfile
+  attributes:
+    patterns:
+      - match: "\\[([a-z\\-,\\s]*)]$"
+        captures:
+          "1":
+            name: "entity.other.attribute-name"
+  scripts:
+    patterns:
+      - include: "#script_indent_shell"
+      - include: "#script_inline_shell"
+      - include: "#script_javascript"
+      - include: "#script_lua"
+      - include: "#script_perl"
+      - include: "#script_powershell"
+      - include: "#script_python"
+      - include: "#script_ruby"
+      - include: "#script_shellscript"
+  script_indent_shell:
+    patterns:
+      - name: markup.fenced_code.block.indented_backtick.justfile
+        begin: "```"
+        end: "```"
+        contentName: meta.embedded.block.javascript
+        patterns:
+          - include: source.shellscript
+  script_inline_shell:
+    patterns:
+      - name: markup.fenced_code.block.backtick.justfile
+        begin: "`"
+        end: "`"
+        contentName: meta.embedded.block.javascript
+        patterns:
+          - include: source.shellscript
+  script_javascript:
+    patterns:
+      - name: markup.fenced_code.block.just
+        begin: "(^\\s+)(#!)\\s*(\\S+) (node)\\s*$"
+        end: "^$"
+        beginCaptures:
+          "2":
+            name: markup.italic
+          "3":
+            name: markup.italic
+          "4":
+            name: keyword.other
+        contentName: meta.embedded.block.javascript
+        patterns:
+          - include: source.js
+  script_lua:
+    patterns:
+      - name: markup.fenced_code.block.just
+        begin: "(^\\s+)(#!)\\s*(\\S+) (lua)\\s*$"
+        end: "^$"
+        beginCaptures:
+          "2":
+            name: markup.italic
+          "3":
+            name: markup.italic
+          "4":
+            name: keyword.other
+        contentName: meta.embedded.block.lua
+        patterns:
+          - include: source.lua
+  script_perl:
+    patterns:
+      - name: markup.fenced_code.block.just
+        begin: "(^\\s+)(#!)\\s*(\\S+) (perl)\\s*$"
+        end: "^$"
+        beginCaptures:
+          "2":
+            name: markup.italic
+          "3":
+            name: markup.italic
+          "4":
+            name: keyword.other
+        contentName: meta.embedded.block.perl
+        patterns:
+          - include: source.perl
+  script_powershell:
+    patterns:
+      - name: markup.fenced_code.block.just
+        begin: "(^\\s+)(#!)\\s*(\\S+) ((pw|powershell)sh)\\s*$"
+        end: "^$"
+        beginCaptures:
+          "2":
+            name: markup.italic
+          "3":
+            name: markup.italic
+          "4":
+            name: keyword.other
+        contentName: meta.embedded.block.powershell
+        patterns:
+          - include: source.powershell
+  script_python:
+    patterns:
+      - name: markup.fenced_code.block.just
+        begin: "(^\\s+)(#!)\\s*(\\S+) (python3?)\\s*$"
+        end: "^$"
+        beginCaptures:
+          "2":
+            name: markup.italic
+          "3":
+            name: markup.italic
+          "4":
+            name: keyword.other
+        contentName: meta.embedded.block.python
+        patterns:
+          - include: source.python
+  script_ruby:
+    patterns:
+      - name: markup.fenced_code.block.just
+        begin: "(^\\s+)(#!)\\s*(\\S+) (ruby)\\s*$"
+        end: "^$"
+        beginCaptures:
+          "2":
+            name: markup.italic
+          "3":
+            name: markup.italic
+          "4":
+            name: keyword.other
+        contentName: meta.embedded.block.ruby
+        patterns:
+          - include: source.ruby
+  script_shellscript:
+    patterns:
+      - name: markup.fenced_code.block.just
+        begin: "(^\\s+)(#!)\\s*(\\S+) ((?>fi|ba|c|k|z)?sh)\\s*$"
+        end: "^$"
+        beginCaptures:
+          "2":
+            name: markup.italic
+          "3":
+            name: markup.italic
+          "4":
+            name: keyword.other
+        contentName: meta.embedded.block.shellscript
+        patterns:
+          - include: source.shell
+scopeName: source.justfile

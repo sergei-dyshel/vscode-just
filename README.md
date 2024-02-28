@@ -2,11 +2,11 @@
 
 A `Just` language syntax for colourizing your `justfile`s and running recipes.
 
-![Just in Code](images/just-demo.gif)
+![Just in Code](images/just-demo.webp)
 
 # Running A Recipe
 
-* `cmd + shift + p` then type `Just: Run Recipe`
+* `cmd + shift + p` / `ctrl + shift + p` then type `Just: Run Recipe`
 * choose a recipe and press enter
 
 # What is Just?
@@ -15,13 +15,20 @@ Just is a task/command/recipe runner. It's a single binary with no dependencies.
 
 [Read more](https://github.com/casey/just) about it on their github page.
 
+[justfile grammar](https://github.com/casey/just/blob/master/GRAMMAR.md)
+
 # Roadmap
 
 * [x] syntax highlighting
 * [x] run recipe
+* [x] [CodeLens](https://code.visualstudio.com/api/references/vscode-api#CodeLensProvider)
+* [x] [Task Provider](https://code.visualstudio.com/api/extension-guides/task-provider)
+* [x] [DocumentFormattingEditProvider](https://code.visualstudio.com/api/references/vscode-api#DocumentFormattingEditProvider)
+* [x] [Semantic Token Provider](https://code.visualstudio.com/api/references/vscode-api#DocumentSemanticTokensProvider)
+* [x] [Document Symbol Provider](https://code.visualstudio.com/api/references/vscode-api#DocumentSymbolProvider)
+* [x] [Call Hierarchy Provider](https://code.visualstudio.com/api/references/vscode-api#CallHierarchyProvider)
 * [ ] pass arguments to recipes
-* [ ] choose a non-default justfile
-* [ ] tree extension showing recipies and dependencies
+* [x] choose a non-default justfile
 
 # About Just
 

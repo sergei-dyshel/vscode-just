@@ -1,4 +1,4 @@
-import { Recipe } from '../types'
+import { Argument, Recipe, Variable as Variables } from '../types';
 
 /**
  * Parse one of the lines when running `just --list` into a JustRecipe.
@@ -8,27 +8,27 @@ import { Recipe } from '../types'
 export function parseRecipeLine(value: string): Recipe {
   // sanity check
   if (!value || typeof value !== 'string') {
-    throw new Error('invalid value')
+    throw new Error('invalid value');
   }
 
   // clean up
-  const clean = value.trim()
+  const clean = value.trim();
 
   // another sanity check
   if (clean.length === 0) {
-    throw new Error('value have content')
+    throw new Error('value have content');
   }
 
   // slice & clean
-  const parts = clean.split('#').map(x => (x || '').trim())
+  const parts = clean.split('#').map(x => (x || '').trim());
 
   // assign the parts
-  const name = parts[0].trim()
+  const name = parts[0].trim();
   const description = clean
     .replace(name, '')
-    .replace(/\#/, '')
-    .trim()
+    .replace(/#/, '')
+    .trim();
 
   // return the goods
-  return { name, description }
+  return { name, description };
 }

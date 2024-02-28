@@ -3,12 +3,12 @@
   "displayName": "just",
   "description": "Provides syntax and recipe launcher for Just scripts.",
   "version": "2.0.0",
-  "publisher": "skellock",
+  "publisher": "lrh3321",
   "private": true,
   "license": "MIT",
   "icon": "images/robot.png",
   "engines": {
-    "vscode": "^1.18.0"
+    "vscode": "^1.80.0"
   },
   "keywords": [
     "just",
@@ -20,46 +20,155 @@
     "launch"
   ],
   "repository": {
-    "url": "https://github.com/skellock/vscode-just.git"
+    "type": "git",
+    "url": "https://github.com/lrh3321/vscode-just.git"
   },
   "bugs": {
-    "url": "https://github.com/skellock/vscode-just/issues"
+    "url": "https://github.com/lrh3321/vscode-just/issues"
   },
-  "homepage": "https://github.com/skellock/vscode-just",
+  "homepage": "https://github.com/lrh3321/vscode-just",
   "categories": [
-    "Languages",
+    "Programming Languages",
+    "Snippets",
     "Other"
   ],
   "main": "./out/extension",
-  "activationEvents": [
-    "onCommand:just.run"
-  ],
   "contributes": {
     "commands": [
       {
         "command": "just.run",
-        "title": "Just: Run Recipe"
+        "title": "%extension.runRecipe.title%",
+        "category": "Just"
+      },
+      {
+        "command": "just.enableCodeLens",
+        "title": "%extension.enableCodeLens.title%",
+        "category": "Just"
+      },
+      {
+        "command": "just.disableCodeLens",
+        "title": "%extension.disableCodelens.title%",
+        "category": "Just"
       }
     ],
+    "configuration": {
+      "title": "Just",
+      "properties": {
+        "just.enableCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "title": "%extension.enableCodeLens.title%",
+          "description": "%extension.enableCodeLens.description%"
+        },
+        "just.justExecutable": {
+          "type": "string",
+          "default": "just",
+          "title": "$extension.justExecutable.title%",
+          "description": "%extension.justExecutable.description%"
+        }
+      }
+    },
     "languages": [
       {
-        "id": "just",
+        "id": "justfile",
         "aliases": [
-          "Just",
+          "Justfile",
           "just"
         ],
         "extensions": [
           "justfile",
-          "Justfile"
+          ".justfile",
+          "Justfile",
+          "JUSTFILE",
+          ".just",
+          ".justfile"
         ],
+        "icon": {
+          "dark": "./images/logo-dark.svg",
+          "light": "./images/logo-light.svg"
+        },
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "just",
-        "scopeName": "source.just",
-        "path": "./syntaxes/just.tmLanguage.json"
+        "language": "justfile",
+        "scopeName": "source.justfile",
+        "path": "./syntaxes/just.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.javascript": "javascript",
+          "meta.embedded.block.lua": "lua",
+          "meta.embedded.block.perl": "perl",
+          "meta.embedded.block.powershell": "powershell",
+          "meta.embedded.block.python": "python",
+          "meta.embedded.block.ruby": "ruby",
+          "meta.embedded.block.shellscript": "shellscript"
+        }
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "just",
+        "properties": {
+          "recipe": {
+            "type": "string",
+            "default": "",
+            "description": "The recipe name"
+          },
+          "justfile": {
+            "type": "string",
+            "description": "The justfile containing the recipe",
+            "default": "Justfile",
+            "examples": [
+              "Justfile",
+              "justfile",
+              ".justfile"
+            ]
+          },
+          "workingDirectory": {
+            "type": "string",
+            "description": "The working directory",
+            "default": "${workspaceFolder}",
+            "examples": [
+              "${workspaceFolder}",
+              "./"
+            ]
+          },
+          "variables": {
+            "type": "object",
+            "description": "Override <VARIABLE> with <VALUE>",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "args": {
+            "type": "array",
+            "description": "Override <VARIABLE> with <VALUE>",
+            "items": {
+              "type": "string"
+            }
+          },
+          "shell": {
+            "type": "string",
+            "description": "Invoke <SHELL> to run recipes"
+          },
+          "shellArgs": {
+            "type": "array",
+            "description": "Invoke shell with <SHELL-ARG> as an argument",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "recipe"
+        ]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "justfile",
+        "path": "./snippets.json"
       }
     ]
   },
@@ -67,18 +176,27 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "lint": "eslint ./src",
+    "lint-fix": "eslint ./src --fix",
+    "test": "npm run compile && node ./out/test/runTest.js",
+    "test-grammar": "npx mocha --ui tdd --timeout 999999 --file ./src/grammar/test.spec.ts --require ts-node/register ./src/grammar/"
   },
   "devDependencies": {
-    "@types/execa": "^0.8.0",
-    "@types/mocha": "^2.2.42",
-    "@types/node": "^7.0.43",
-    "prettier": "^1.9.1",
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.6"
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^18.19.19",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "@vscode/test-electron": "^2.3.9",
+    "@vscode/vsce": "^2.24.0",
+    "eslint": "^8.57.0",
+    "glob": "^10.3.10",
+    "js-yaml": "^4.1.0",
+    "mocha": "^10.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "execa": "^0.8.0"
+    "antlr4": "^4.13.1-patch-1"
   }
 }
