@@ -50,7 +50,7 @@ currentStatus := `git status -s | wc -l | awk '$1=$1'`
 @hello:
   echo "hello!"
 
-# update syntaxes/just.tmLanguage.json
+[doc('update syntaxes/just.tmLanguage.json')]
 @tmLanguage:
   npx js-yaml ./syntaxes/just.tmLanguage.yaml > ./syntaxes/just.tmLanguage.json
 
@@ -60,5 +60,6 @@ currentStatus := `git status -s | wc -l | awk '$1=$1'`
 @fix:
   npm run lint-fix
 
+[doc('Generate grammar files')]
 @grammar:
   just -d ./src/grammar --justfile src/grammar/justfile

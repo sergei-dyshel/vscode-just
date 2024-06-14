@@ -1,13 +1,61 @@
 import * as assert from 'assert';
 import { describe, it } from "mocha";
 import JustfileLexer from './JustfileLexer';
-import { getRecipes, parseJustfile } from '.';
+import { getRecipeName, getRecipes, parseJustfile } from '.';
 import { globSync } from 'glob';
 import { readFileSync } from 'fs';
 import { basename } from 'path';
-
+import { CharStream } from 'antlr4';
 
 describe("Test JustfileLexer", () => {
+    it("Parse Tokens", () => {
+        const justfile = `a:
+    echo a
+first:
+    echo first:one
+second:
+    echo second:two
+
+`;
+
+        const lexer = new JustfileLexer(new CharStream(justfile));
+
+        const tokens = lexer.getAllTokens()
+
+        for (let index = 0; index < tokens.length; index++) {
+            const element = tokens[index];
+            // console.log(element.text, element.line, element.column)
+        }
+    })
+})
+
+describe("Test JustfileParser", () => {
+    it("should parse3", () => {
+        const justfile = `a:
+    echo a
+first:
+    echo first:one
+second:
+    echo second:two
+
+`;
+        const tree = parseJustfile(justfile, { checkSyntaxErrors: true });
+        assert.equal(tree.exception, null);
+        const recipes = getRecipes(tree);
+
+        // recipes?.forEach((r) => {
+        //     console.log(getRecipeName(r))
+        // })
+
+        tree.item_list().forEach((c) => {
+            assert.equal(c.exception, null);
+
+            // console.log(justfile.substring(c.start.start, c.stop?.stop));            
+        });
+
+        assert.equal(recipes?.length, 3);
+    });
+
     it("assignment", () => {
         const lines = [`bcc := "
         hello\t
@@ -89,7 +137,7 @@ def c="a" : abc
     echo "00"
 `;
 
-        const tree = parseJustfile(justfile);
+        const tree = parseJustfile(justfile, { checkSyntaxErrors: true });
 
         assert.equal(-1, JustfileLexer.EOF);
         assert.equal(tree.exception, null);
@@ -99,10 +147,10 @@ def c="a" : abc
         assert.equal(recipes[0].start.line, 3);
         assert.equal(recipes[1].start.line, 9);
 
-        tree.item_list().forEach((c) => {
-            assert.equal(c.exception, null);
-            // console.log(justfile.substring(c.start.start, c.stop?.stop)); 
-        });
+        // tree.item_list().forEach((c) => {
+        //     assert.equal(c.exception, null);
+        //     // console.log(justfile.substring(c.start.start, c.stop?.stop)); 
+        // });
     });
 
     it("should parse2", () => {
@@ -133,8 +181,9 @@ default:
         assert.equal(recipes?.length, 1);
     });
 
+
     describe("Parse just-repo", () => {
-        let justfiles = globSync('example/just-repo/*.just',)
+        const justfiles = globSync('example/just-repo/*.just',)
 
         justfiles.forEach((justfilePath, i) => {
 

@@ -1,6 +1,4 @@
-import { CancellationToken, DocumentSymbol, DocumentSymbolProvider, ProviderResult, SymbolInformation, TextDocument, languages, SymbolKind, Location, Uri, Range, DocumentFormattingEditProvider, FormattingOptions, TextEdit, Position } from "vscode";
-import { execJust } from "../just";
-import { basename } from "path";
+import { CancellationToken, DocumentSymbol, DocumentSymbolProvider, ProviderResult, SymbolInformation, TextDocument, Location, } from "vscode";
 import { parseJustfile } from "../grammar";
 import { rangeFromRuleContext, symbolicNameFromToken } from "./misc";
 import { ParserRuleContext } from "antlr4";

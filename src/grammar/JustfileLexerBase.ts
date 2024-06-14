@@ -2,8 +2,6 @@ import {
     CharStream,
     Lexer,
     Token,
-    CommonToken,
-    InputStream
 } from "antlr4";
 import JustfileLexer from "./JustfileLexer";
 
@@ -90,9 +88,9 @@ export default class JustfileLexerBase extends Lexer {
     getFullRecipeTokens(): void {
         const loop = true;
         while (loop) {
-            const before = this._tokenStartCharIndex;
-            const beforeLine = this._tokenStartLine;
-            const beforeColumn = this._tokenStartColumn;
+            // const before = this._tokenStartCharIndex;
+            // const beforeLine = this._tokenStartLine;
+            // const beforeColumn = this._tokenStartColumn;
 
             const token = super.nextToken();
             this.tokenQueue.push(token);
@@ -103,16 +101,20 @@ export default class JustfileLexerBase extends Lexer {
                 this.tokenQueue.pop();
                 token.type = JustfileLexer.NEWLINE;
                 this.tokenQueue.push(token);
-
             } else if (token.column === 0) {
                 if (!token.text.startsWith(this.indent)) {
                     // 回退
                     this.tokenQueue.pop();
-                    this._input.seek(before);
+                    // this._input.seek(before);
 
-                    (this._interp as any).startIndex = before;
-                    this.line = beforeLine;
-                    this.column = beforeColumn;
+                    // (this._interp as any).startIndex = before;
+                    // this.line = beforeLine;
+                    // this.column = beforeColumn;
+                    this._input.seek(token.start);
+
+                    // (this._interp as any).startIndex = token.start;
+                    this.line = token.line;
+                    this.column = token.column;
                     break;
                 } else {
                     this.tokenQueue.pop();
@@ -121,32 +123,8 @@ export default class JustfileLexerBase extends Lexer {
                     token.start = token.start + this.indent.length;
                     this.tokenQueue.push(indent);
                     this.tokenQueue.push(token);
-
-                    // console.log(indent.text);
-                    // console.log(token.text);
                 }
             }
         }
     }
-
-    // notIndentedString(): boolean {
-    //     const s = this._input.getText(this._tokenStartCharIndex, this._tokenStartCharIndex + 3)
-    //     if (s.length == 4) {
-    //         if (s[0] !== s[3] && s[0] === s[1] && s[0] === s[2]) {
-    //             return false
-    //         }
-    //     }
-    //     return true;
-    // }
-}
-
-interface _LexerATNSimulator {
-    startIndex: number
-    line: number
-    column: number
-}
-
-interface Position {
-    line: number
-    column: number
 }

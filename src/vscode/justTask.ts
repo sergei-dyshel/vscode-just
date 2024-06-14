@@ -1,4 +1,4 @@
-import { CancellationToken, ProcessExecution, ProviderResult, ShellExecution, Task, TaskDefinition, TaskProvider, TaskScope, tasks, workspace } from "vscode";
+import { CancellationToken, ProcessExecution, ProviderResult, Task, TaskDefinition, TaskProvider, TaskScope, workspace } from "vscode";
 import { getRecipes } from "../just";
 
 interface JustTaskDefinition extends TaskDefinition {
@@ -47,7 +47,7 @@ export class JustTaskProvider implements TaskProvider {
     private justfile: string | undefined;
     private workspaceRoot?: string;
 
-    constructor() { 
+    constructor() {
         if (workspace.workspaceFolders) {
             this.workspaceRoot = workspace.workspaceFolders[0]?.uri?.fsPath;
         }
@@ -95,7 +95,7 @@ export class JustTaskProvider implements TaskProvider {
 
     getTask(definition: JustTaskDefinition, source?: Task): Task {
         const args: string[] = [];
-    
+
         if (definition.variables) {
             Object.entries<string>(definition.variables).forEach(([key, value]) => {
                 if (typeof value === 'string') {
@@ -103,33 +103,33 @@ export class JustTaskProvider implements TaskProvider {
                 }
             });
         }
-    
+
         args.push(
             definition.justfile ?? 'just',
             definition.recipe
         );
-    
+
         if (definition.workingDirectory) {
             args.push('--working-directory', definition.workingDirectory);
         }
-    
+
         if (definition.shell) {
             args.push('--shell', definition.shell);
         }
-    
+
         if (definition.shellArgs) {
             definition.shellArgs.forEach(arg => {
                 args.push('--shell-arg', arg);
             });
         }
-    
+
         if (definition.args) {
             definition.args.forEach(arg => args.push(arg));
         }
-    
+
         const justExe = workspace.getConfiguration("just").get('justExecutable', 'just');
         const taskScope = source?.scope ?? TaskScope.Workspace;
-    
+
         return new Task(
             definition,
             taskScope,
