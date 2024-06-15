@@ -3,7 +3,7 @@ import { JustExecError, execJust } from './exec';
 import path = require('path')
 
 export interface runRecipeOptions {
-  args?: string[]
+  args?: string[],
 }
 
 /**
@@ -12,7 +12,11 @@ export interface runRecipeOptions {
 export async function runRecipe(recipe: Recipe, workingDirectory?: string, options?: runRecipeOptions): Promise<RunRecipeResult> {
   try {
     const args: string[] = [];
-    const options = {};
+    options?.args?.forEach(arg => {
+      args.push(arg);
+    });
+
+    const opts = {};
     if (recipe.justfile) {
       const dirname = path.dirname(recipe.justfile);
       if (workingDirectory) {
@@ -21,12 +25,12 @@ export async function runRecipe(recipe: Recipe, workingDirectory?: string, optio
         args.push('--working-directory', dirname);
       }
       args.push('--justfile', recipe.justfile);
-      options['cwd'] = dirname;
+      opts['cwd'] = dirname;
     }
     args.push(recipe.name);
 
     // make the call to just
-    const execaResult = await execJust(args, options);
+    const execaResult = await execJust(args, opts);
 
     // successful call to the executable?
     if (execaResult.exitCode === 0) {
@@ -45,6 +49,7 @@ export async function runRecipe(recipe: Recipe, workingDirectory?: string, optio
   } catch (e) {
     // runtime check for an execa error
     if (e instanceof JustExecError) {
+      console.debug(e.command, e.args);
       return {
         kind: 'error',
         // stderr: error.stderr && error.stderr.trim(),

@@ -13,7 +13,7 @@ import {
 } from 'antlr4';
 import JustfileParserListener from "./JustfileParserListener.js";
 // for running tests with parameters, TODO: discuss strategy for typed parameters in CI
- 
+// eslint-disable-next-line no-unused-vars
 type int = number;
 
 export default class JustfileParser extends Parser {
@@ -226,7 +226,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public justfile(): JustfileContext {
-		const localctx: JustfileContext = new JustfileContext(this, this._ctx, this.state);
+		let localctx: JustfileContext = new JustfileContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 0, JustfileParser.RULE_justfile);
 		let _la: number;
 		try {
@@ -266,7 +266,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public item(): ItemContext {
-		const localctx: ItemContext = new ItemContext(this, this._ctx, this.state);
+		let localctx: ItemContext = new ItemContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 2, JustfileParser.RULE_item);
 		try {
 			this.state = 126;
@@ -406,7 +406,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public eol(): EolContext {
-		const localctx: EolContext = new EolContext(this, this._ctx, this.state);
+		let localctx: EolContext = new EolContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 4, JustfileParser.RULE_eol);
 		let _la: number;
 		try {
@@ -439,7 +439,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public postComment(): PostCommentContext {
-		const localctx: PostCommentContext = new PostCommentContext(this, this._ctx, this.state);
+		let localctx: PostCommentContext = new PostCommentContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 6, JustfileParser.RULE_postComment);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -464,7 +464,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public itemDocumentation(): ItemDocumentationContext {
-		const localctx: ItemDocumentationContext = new ItemDocumentationContext(this, this._ctx, this.state);
+		let localctx: ItemDocumentationContext = new ItemDocumentationContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 8, JustfileParser.RULE_itemDocumentation);
 		let _la: number;
 		try {
@@ -502,7 +502,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public importStatement(): ImportStatementContext {
-		const localctx: ImportStatementContext = new ImportStatementContext(this, this._ctx, this.state);
+		let localctx: ImportStatementContext = new ImportStatementContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 10, JustfileParser.RULE_importStatement);
 		let _la: number;
 		try {
@@ -558,7 +558,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public aliasStatement(): AliasStatementContext {
-		const localctx: AliasStatementContext = new AliasStatementContext(this, this._ctx, this.state);
+		let localctx: AliasStatementContext = new AliasStatementContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 12, JustfileParser.RULE_aliasStatement);
 		let _la: number;
 		try {
@@ -600,7 +600,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public originRecipeName(): OriginRecipeNameContext {
-		const localctx: OriginRecipeNameContext = new OriginRecipeNameContext(this, this._ctx, this.state);
+		let localctx: OriginRecipeNameContext = new OriginRecipeNameContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 14, JustfileParser.RULE_originRecipeName);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -625,7 +625,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public setKeyword(): SetKeywordContext {
-		const localctx: SetKeywordContext = new SetKeywordContext(this, this._ctx, this.state);
+		let localctx: SetKeywordContext = new SetKeywordContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 16, JustfileParser.RULE_setKeyword);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -650,7 +650,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public aliasKeyword(): AliasKeywordContext {
-		const localctx: AliasKeywordContext = new AliasKeywordContext(this, this._ctx, this.state);
+		let localctx: AliasKeywordContext = new AliasKeywordContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 18, JustfileParser.RULE_aliasKeyword);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -675,7 +675,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public importKeyword(): ImportKeywordContext {
-		const localctx: ImportKeywordContext = new ImportKeywordContext(this, this._ctx, this.state);
+		let localctx: ImportKeywordContext = new ImportKeywordContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 20, JustfileParser.RULE_importKeyword);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -700,7 +700,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public exportKeyword(): ExportKeywordContext {
-		const localctx: ExportKeywordContext = new ExportKeywordContext(this, this._ctx, this.state);
+		let localctx: ExportKeywordContext = new ExportKeywordContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 22, JustfileParser.RULE_exportKeyword);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -725,7 +725,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public modKeyword(): ModKeywordContext {
-		const localctx: ModKeywordContext = new ModKeywordContext(this, this._ctx, this.state);
+		let localctx: ModKeywordContext = new ModKeywordContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 24, JustfileParser.RULE_modKeyword);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -750,7 +750,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public assignment(): AssignmentContext {
-		const localctx: AssignmentContext = new AssignmentContext(this, this._ctx, this.state);
+		let localctx: AssignmentContext = new AssignmentContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 26, JustfileParser.RULE_assignment);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -779,7 +779,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public variableName(): VariableNameContext {
-		const localctx: VariableNameContext = new VariableNameContext(this, this._ctx, this.state);
+		let localctx: VariableNameContext = new VariableNameContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 28, JustfileParser.RULE_variableName);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -804,7 +804,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public exportStatement(): ExportStatementContext {
-		const localctx: ExportStatementContext = new ExportStatementContext(this, this._ctx, this.state);
+		let localctx: ExportStatementContext = new ExportStatementContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 30, JustfileParser.RULE_exportStatement);
 		let _la: number;
 		try {
@@ -842,7 +842,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public settingStatement(): SettingStatementContext {
-		const localctx: SettingStatementContext = new SettingStatementContext(this, this._ctx, this.state);
+		let localctx: SettingStatementContext = new SettingStatementContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 32, JustfileParser.RULE_settingStatement);
 		let _la: number;
 		try {
@@ -928,7 +928,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public booleanSettingNames(): BooleanSettingNamesContext {
-		const localctx: BooleanSettingNamesContext = new BooleanSettingNamesContext(this, this._ctx, this.state);
+		let localctx: BooleanSettingNamesContext = new BooleanSettingNamesContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 34, JustfileParser.RULE_booleanSettingNames);
 		let _la: number;
 		try {
@@ -961,7 +961,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public stringSettingNames(): StringSettingNamesContext {
-		const localctx: StringSettingNamesContext = new StringSettingNamesContext(this, this._ctx, this.state);
+		let localctx: StringSettingNamesContext = new StringSettingNamesContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 36, JustfileParser.RULE_stringSettingNames);
 		let _la: number;
 		try {
@@ -994,7 +994,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public stringSeqSettingNames(): StringSeqSettingNamesContext {
-		const localctx: StringSeqSettingNamesContext = new StringSeqSettingNamesContext(this, this._ctx, this.state);
+		let localctx: StringSeqSettingNamesContext = new StringSeqSettingNamesContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 38, JustfileParser.RULE_stringSeqSettingNames);
 		let _la: number;
 		try {
@@ -1027,7 +1027,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public moduleStatement(): ModuleStatementContext {
-		const localctx: ModuleStatementContext = new ModuleStatementContext(this, this._ctx, this.state);
+		let localctx: ModuleStatementContext = new ModuleStatementContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 40, JustfileParser.RULE_moduleStatement);
 		let _la: number;
 		try {
@@ -1085,7 +1085,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public boolean_(): BooleanContext {
-		const localctx: BooleanContext = new BooleanContext(this, this._ctx, this.state);
+		let localctx: BooleanContext = new BooleanContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 42, JustfileParser.RULE_boolean);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -1112,7 +1112,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public booleanValues(): BooleanValuesContext {
-		const localctx: BooleanValuesContext = new BooleanValuesContext(this, this._ctx, this.state);
+		let localctx: BooleanValuesContext = new BooleanValuesContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 44, JustfileParser.RULE_booleanValues);
 		let _la: number;
 		try {
@@ -1145,7 +1145,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public stringSlice(): StringSliceContext {
-		const localctx: StringSliceContext = new StringSliceContext(this, this._ctx, this.state);
+		let localctx: StringSliceContext = new StringSliceContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 46, JustfileParser.RULE_stringSlice);
 		let _la: number;
 		try {
@@ -1206,7 +1206,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public expression(): ExpressionContext {
-		const localctx: ExpressionContext = new ExpressionContext(this, this._ctx, this.state);
+		let localctx: ExpressionContext = new ExpressionContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 48, JustfileParser.RULE_expression);
 		let _la: number;
 		try {
@@ -1366,7 +1366,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public condition(): ConditionContext {
-		const localctx: ConditionContext = new ConditionContext(this, this._ctx, this.state);
+		let localctx: ConditionContext = new ConditionContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 50, JustfileParser.RULE_condition);
 		let _la: number;
 		try {
@@ -1403,7 +1403,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public conditionBlock(): ConditionBlockContext {
-		const localctx: ConditionBlockContext = new ConditionBlockContext(this, this._ctx, this.state);
+		let localctx: ConditionBlockContext = new ConditionBlockContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 52, JustfileParser.RULE_conditionBlock);
 		let _la: number;
 		try {
@@ -1443,7 +1443,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public functionLeft(): FunctionLeftContext {
-		const localctx: FunctionLeftContext = new FunctionLeftContext(this, this._ctx, this.state);
+		let localctx: FunctionLeftContext = new FunctionLeftContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 54, JustfileParser.RULE_functionLeft);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -1470,7 +1470,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public functionRight(): FunctionRightContext {
-		const localctx: FunctionRightContext = new FunctionRightContext(this, this._ctx, this.state);
+		let localctx: FunctionRightContext = new FunctionRightContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 56, JustfileParser.RULE_functionRight);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -1495,7 +1495,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public functionValue(): FunctionValueContext {
-		const localctx: FunctionValueContext = new FunctionValueContext(this, this._ctx, this.state);
+		let localctx: FunctionValueContext = new FunctionValueContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 58, JustfileParser.RULE_functionValue);
 		let _la: number;
 		try {
@@ -1533,7 +1533,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public value(): ValueContext {
-		const localctx: ValueContext = new ValueContext(this, this._ctx, this.state);
+		let localctx: ValueContext = new ValueContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 60, JustfileParser.RULE_value);
 		try {
 			this.state = 314;
@@ -1603,7 +1603,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public sequence(): SequenceContext {
-		const localctx: SequenceContext = new SequenceContext(this, this._ctx, this.state);
+		let localctx: SequenceContext = new SequenceContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 62, JustfileParser.RULE_sequence);
 		let _la: number;
 		try {
@@ -1656,7 +1656,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public recipe(): RecipeContext {
-		const localctx: RecipeContext = new RecipeContext(this, this._ctx, this.state);
+		let localctx: RecipeContext = new RecipeContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 64, JustfileParser.RULE_recipe);
 		let _la: number;
 		try {
@@ -1792,7 +1792,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public recipeName(): RecipeNameContext {
-		const localctx: RecipeNameContext = new RecipeNameContext(this, this._ctx, this.state);
+		let localctx: RecipeNameContext = new RecipeNameContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 66, JustfileParser.RULE_recipeName);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -1817,7 +1817,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public attributes(): AttributesContext {
-		const localctx: AttributesContext = new AttributesContext(this, this._ctx, this.state);
+		let localctx: AttributesContext = new AttributesContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 68, JustfileParser.RULE_attributes);
 		let _la: number;
 		try {
@@ -1861,7 +1861,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public attribute(): AttributeContext {
-		const localctx: AttributeContext = new AttributeContext(this, this._ctx, this.state);
+		let localctx: AttributeContext = new AttributeContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 70, JustfileParser.RULE_attribute);
 		let _la: number;
 		try {
@@ -1901,7 +1901,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public parameterName(): ParameterNameContext {
-		const localctx: ParameterNameContext = new ParameterNameContext(this, this._ctx, this.state);
+		let localctx: ParameterNameContext = new ParameterNameContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 72, JustfileParser.RULE_parameterName);
 		let _la: number;
 		try {
@@ -1937,7 +1937,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public parameter(): ParameterContext {
-		const localctx: ParameterContext = new ParameterContext(this, this._ctx, this.state);
+		let localctx: ParameterContext = new ParameterContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 74, JustfileParser.RULE_parameter);
 		try {
 			this.state = 396;
@@ -1979,7 +1979,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public variadicModifier(): VariadicModifierContext {
-		const localctx: VariadicModifierContext = new VariadicModifierContext(this, this._ctx, this.state);
+		let localctx: VariadicModifierContext = new VariadicModifierContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 76, JustfileParser.RULE_variadicModifier);
 		let _la: number;
 		try {
@@ -2012,7 +2012,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public variadic(): VariadicContext {
-		const localctx: VariadicContext = new VariadicContext(this, this._ctx, this.state);
+		let localctx: VariadicContext = new VariadicContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 78, JustfileParser.RULE_variadic);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -2039,7 +2039,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public dependency(): DependencyContext {
-		const localctx: DependencyContext = new DependencyContext(this, this._ctx, this.state);
+		let localctx: DependencyContext = new DependencyContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 80, JustfileParser.RULE_dependency);
 		let _la: number;
 		try {
@@ -2098,7 +2098,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public body(): BodyContext {
-		const localctx: BodyContext = new BodyContext(this, this._ctx, this.state);
+		let localctx: BodyContext = new BodyContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 82, JustfileParser.RULE_body);
 		try {
 			this.state = 418;
@@ -2136,7 +2136,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public rawBlocks(): RawBlocksContext {
-		const localctx: RawBlocksContext = new RawBlocksContext(this, this._ctx, this.state);
+		let localctx: RawBlocksContext = new RawBlocksContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 84, JustfileParser.RULE_rawBlocks);
 		try {
 			let _alt: number;
@@ -2200,7 +2200,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public commandBlocks(): CommandBlocksContext {
-		const localctx: CommandBlocksContext = new CommandBlocksContext(this, this._ctx, this.state);
+		let localctx: CommandBlocksContext = new CommandBlocksContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 86, JustfileParser.RULE_commandBlocks);
 		try {
 			let _alt: number;
@@ -2260,7 +2260,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public interpolation(): InterpolationContext {
-		const localctx: InterpolationContext = new InterpolationContext(this, this._ctx, this.state);
+		let localctx: InterpolationContext = new InterpolationContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 88, JustfileParser.RULE_interpolation);
 		try {
 			this.enterOuterAlt(localctx, 1);
@@ -2289,7 +2289,7 @@ export default class JustfileParser extends Parser {
 	}
 	// @RuleVersion(0)
 	public stringValue(): StringValueContext {
-		const localctx: StringValueContext = new StringValueContext(this, this._ctx, this.state);
+		let localctx: StringValueContext = new StringValueContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 90, JustfileParser.RULE_stringValue);
 		let _la: number;
 		try {

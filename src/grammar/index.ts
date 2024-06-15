@@ -1,6 +1,11 @@
-import { CharStream, CommonTokenStream, Token } from "antlr4";
+import { CharStream, CommonTokenStream, TerminalNode, Token } from "antlr4";
 import JustfileLexer from "./JustfileLexer";
-import JustfileParser, { DependencyContext, ItemContext, JustfileContext, RecipeContext } from "./JustfileParser";
+import JustfileParser, {
+    DependencyContext,
+    ItemDocumentationContext,
+    JustfileContext,
+    RecipeContext
+} from "./JustfileParser";
 
 export interface ParseOptions {
     /**
@@ -98,4 +103,20 @@ export function positionOfTokenEnd(end: Token): Pos {
         line: endLine,
         character: endColumn,
     };
+}
+
+export interface DocumentationItem {
+    itemDocumentation(): ItemDocumentationContext
+}
+
+export function listComments(item: DocumentationItem): Array<TerminalNode> {
+    const comments: Array<TerminalNode> = [];
+    const doc = item.itemDocumentation();
+    if (doc) {
+        doc.COMMENT_list()?.forEach((comment) => {
+            comments.push(comment);
+            // this._pushSemanticTerminalNodeToken(builder, comment, "comment");
+        });
+    }
+    return comments;
 }

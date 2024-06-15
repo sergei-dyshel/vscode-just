@@ -4,5 +4,7 @@
     "extension.enableCodeLens.description": "启用/禁用通过 Code Lens 运行配方",
     "extension.disableCodelens.title": "禁用 Codelens",
     "extension.justExecutable.title": "Just 可执行文件",
-    "extension.justExecutable.description": "Just 可执行文件路径"
+    "extension.justExecutable.description": "Just 可执行文件路径",
+    "extension.justShell.title": "Just Shell",
+    "extension.justShell.description": "配置执行配方使用的 Shell"
 }

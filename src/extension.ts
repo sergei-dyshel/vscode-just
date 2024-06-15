@@ -13,6 +13,7 @@ import {
 import { setJustExecutable } from './just';
 import { Recipe } from './types';
 import { justfileLegend } from './vscode/documentSemanticTokensProvider';
+import { setJustShell } from './just/exec';
 
 /**
  * The channel we'll be writing our output to.
@@ -45,6 +46,8 @@ export function activate(context: ExtensionContext) {
 
   const justExe = workspace.getConfiguration(settingSectionID).get('justExecutable', 'just');
   setJustExecutable(justExe);
+  const justShell = workspace.getConfiguration(settingSectionID).get('justShell', '');
+  setJustShell(justShell);
 
   const codelensProvider = new JustCodeLensProvider();
 
@@ -66,6 +69,8 @@ export function activate(context: ExtensionContext) {
       if (e.affectsConfiguration(settingSectionID)) {
         const justExe = workspace.getConfiguration(settingSectionID).get('justExecutable', 'just');
         setJustExecutable(justExe);
+        const justShell = workspace.getConfiguration(settingSectionID).get('justShell', '');
+        setJustShell(justShell);
       }
     }),
 

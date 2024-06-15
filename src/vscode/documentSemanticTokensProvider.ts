@@ -8,7 +8,7 @@ import {
 	SemanticTokensLegend,
 	TextDocument,
 } from 'vscode';
-import { parseJustfile } from '../grammar';
+import { listComments, parseJustfile } from '../grammar';
 import { rangeFromRuleContext, rangeFromTerminalNode } from './misc';
 import { ParseTree, ParserRuleContext, TerminalNode } from 'antlr4';
 import { ValueContext } from '../grammar/JustfileParser';
@@ -46,6 +46,10 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 
 			const settings = item.settingStatement();
 			if (settings) {
+				listComments(settings).forEach((comment) => {
+					this._pushSemanticTerminalNodeToken(builder, comment, "comment");
+				});
+
 				const settingName = settings.stringSettingNames() || settings.stringSeqSettingNames() || settings.booleanSettingNames();
 				this._pushSemanticToken(builder, settingName, "property", ['modification'],);
 				return;
@@ -60,6 +64,9 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 
 			const _export = item.exportStatement();
 			if (_export) {
+				listComments(_export).forEach((comment) => {
+					this._pushSemanticTerminalNodeToken(builder, comment, "comment");
+				});
 				const assignment = _export.assignment();
 				if (assignment) {
 					const variableName = assignment.variableName();
@@ -71,6 +78,9 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 
 			const alias = item.aliasStatement();
 			if (alias) {
+				listComments(alias).forEach((comment) => {
+					this._pushSemanticTerminalNodeToken(builder, comment, "comment");
+				});
 				const recipeName = alias.recipeName();
 				const originRecipeName = alias.originRecipeName();
 
@@ -81,6 +91,9 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 
 			const recipe = item.recipe();
 			if (recipe) {
+				listComments(recipe).forEach((comment) => {
+					this._pushSemanticTerminalNodeToken(builder, comment, "comment");
+				});
 				const recipeName = recipe.recipeName();
 				this._pushSemanticToken(builder, recipeName, "method", ["declaration"]);
 

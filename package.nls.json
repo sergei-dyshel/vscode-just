@@ -4,5 +4,7 @@
     "extension.enableCodeLens.description": "Enable/disable code lens for run recipes",
     "extension.disableCodelens.title": "Disable Codelens",
     "extension.justExecutable.title": "Just Executable",
-    "extension.justExecutable.description": "The path to the just executable"
+    "extension.justExecutable.description": "The path to the just executable",
+    "extension.justShell.title": "Just Shell",
+    "extension.justShell.description": "Invoke <SHELL> to run recipes"
 }
