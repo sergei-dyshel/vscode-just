@@ -1,6 +1,6 @@
 import { ParserRuleContext, TerminalNode, Token } from "antlr4";
 import { Position, Range, SymbolKind } from "vscode";
-import { AssignmentContext, ExportStatementContext, RecipeContext, SettingStatementContext,  } from "../grammar/JustfileParser";
+import { AssignmentContext, ExportStatementContext, RecipeContext, SettingStatementContext, } from "../grammar/JustfileParser";
 import { positionOfTokenEnd, positionOfTokenStart } from '../grammar';
 
 export function rangeFromRuleContext(ctx: ParserRuleContext): Range {
@@ -32,13 +32,17 @@ export function symbolicNameFromToken(ctx: ParserRuleContext): SymbolInfo | null
             };
         }
         if (ctx instanceof ExportStatementContext) {
-            return symbolicNameFromToken(ctx.assignment());
+            const symbol = symbolicNameFromToken(ctx.assignment());
+            if (symbol) {
+                symbol.name = "export " + symbol.name;
+            }
+            return symbol;
         }
         if (ctx instanceof AssignmentContext) {
             return { name: ctx.variableName().getText(), kind: SymbolKind.Variable };
         }
         if (ctx instanceof SettingStatementContext) {
-            return { name: (ctx.booleanSettingNames() || ctx.stringSettingNames() || ctx.stringSeqSettingNames()).getText(), kind: SymbolKind.Field };
+            return { name: "set " + (ctx.booleanSettingNames() || ctx.stringSettingNames() || ctx.stringSeqSettingNames()).getText(), kind: SymbolKind.Field };
         }
     } catch (error) {
         console.debug(error);

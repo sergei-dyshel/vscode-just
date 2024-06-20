@@ -1,21 +1,30 @@
-import { spawn, } from 'child_process';
+import { spawn } from 'child_process';
 
-let justExe: string = 'just';
-let justShell: string = '';
-
+const justOptions: { exe: string, shell: string, unstableFeatures: boolean } = {
+    exe: 'just',
+    shell: '',
+    unstableFeatures: false
+};
 export function getJustExecutable(): string {
-    return justExe;
+    return justOptions.exe;
 }
 
 export function setJustExecutable(just: string) {
-    justExe = just;
+    justOptions.exe = just;
 }
 
 export function getJustShell(): string {
-    return justShell;
+    return justOptions.shell;
 }
 export function setJustShell(shell: string) {
-    justShell = shell;
+    justOptions.shell = shell;
+}
+export function isJustUnstableFeaturesEnabled(): boolean {
+    return justOptions.unstableFeatures;
+}
+
+export function enableJustUnstableFeatures(enabled: boolean) {
+    justOptions.unstableFeatures = enabled;
 }
 
 export interface execOptions {
@@ -52,20 +61,33 @@ export class execResult {
 }
 
 export async function execJust(args?: string[], options?: execOptions): Promise<execResult> {
-    if (justShell) {
+    if (justOptions.shell) {
         if (args) {
             const index = args.indexOf("--shell");
             if (index < 0) {
-                args = ["--shell", justShell].concat(args);
+                args = ["--shell", justOptions.shell].concat(args);
             } else {
                 console.debug("just shell already set");
             }
         } else {
-            args = ["--shell", justShell];
+            args = ["--shell", justOptions.shell];
         }
     }
 
-    const child = spawn(justExe, args, options);
+    if (justOptions.unstableFeatures) {
+        if (args) {
+            const index = args.indexOf("--unstable");
+            if (index < 0) {
+                args = ["--unstable"].concat(args);
+            }
+        }
+        else {
+            args = ["--unstable"];
+        }
+    }
+
+    const justExe = getJustExecutable();
+    const child = spawn(justOptions.exe, args, options);
     if (child.pid === undefined) {
         const err = await new Promise<JustExecError>((resolve, reject) => {
             child.on('error', (e) => {
@@ -101,6 +123,8 @@ export async function execJust(args?: string[], options?: execOptions): Promise<
                     reject(new JustExecError(stderr, 'just-parse-error', undefined, undefined, justExe, args));
                 } else if (stderr.includes('error: Justfile does not contain recipe ')) {
                     reject(new JustExecError(stderr, 'no-recipe', undefined, undefined, justExe, args));
+                } else if (stderr.includes('error: Formatted justfile differs from original.')) {
+                    reject(new JustExecError(stderr, 'unformatted', undefined, undefined, justExe, args));
                 }
                 reject(new JustExecError(stderr, 'unknown', undefined, undefined, justExe, args));
                 return;
@@ -127,6 +151,7 @@ export type JustErrorKind = 'no-recipes' |
     'just-parse-error' |
     'multiple-candidate' |
     'no-recipe' |
+    'unformatted' |
     'unknown';
 
 export class JustExecError extends Error {
@@ -141,5 +166,3 @@ export class JustExecError extends Error {
         super(message);
     }
 }
-
-// const justFileFormatError = new JustExecError('', );

@@ -5,4 +5,4 @@ node_modules
 .vscode
 yarn-error.log
 
-/just-*.vsix
+/just*.vsix

@@ -6,5 +6,7 @@
     "extension.justExecutable.title": "Just Executable",
     "extension.justExecutable.description": "The path to the just executable",
     "extension.justShell.title": "Just Shell",
-    "extension.justShell.description": "Invoke <SHELL> to run recipes"
+    "extension.justShell.description": "Invoke <SHELL> to run recipes",
+    "extension.justUnstableFeatures.title": "Enable unstable features",
+    "extension.justUnstableFeatures.description": "Enable unstable features"
 }

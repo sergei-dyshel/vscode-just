@@ -6,5 +6,7 @@
     "extension.justExecutable.title": "Just 可执行文件",
     "extension.justExecutable.description": "Just 可执行文件路径",
     "extension.justShell.title": "Just Shell",
-    "extension.justShell.description": "配置执行配方使用的 Shell"
+    "extension.justShell.description": "配置执行配方使用的 Shell",
+    "extension.justUnstableFeatures.title": "启用不稳定的特性",
+    "extension.justUnstableFeatures.description": "启用不稳定的特性"
 }

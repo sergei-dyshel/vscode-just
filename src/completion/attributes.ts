@@ -49,6 +49,10 @@ export const attributes: AttributeData[] = [
         detail: "Override globally quiet recipes and always echo out the recipe."
     },
     {
+        name: "positional-arguments",
+        detail: "Turn on positional arguments for this recipe."
+    },
+    {
         name: "private",
         detail: "Omitted from just --list."
     },

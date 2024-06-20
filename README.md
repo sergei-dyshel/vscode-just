@@ -27,6 +27,7 @@ Just is a task/command/recipe runner. It's a single binary with no dependencies.
 * [x] [Semantic Token Provider](https://code.visualstudio.com/api/references/vscode-api#DocumentSemanticTokensProvider)
 * [x] [Document Symbol Provider](https://code.visualstudio.com/api/references/vscode-api#DocumentSymbolProvider)
 * [x] [Call Hierarchy Provider](https://code.visualstudio.com/api/references/vscode-api#CallHierarchyProvider)
+* [x] [CompletionItemProvider](https://code.visualstudio.com/api/references/vscode-api#CompletionItemProvider&lt;T&gt;)
 * [ ] pass arguments to recipes
 * [x] choose a non-default justfile
 

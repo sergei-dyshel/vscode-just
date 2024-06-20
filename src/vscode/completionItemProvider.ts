@@ -11,18 +11,17 @@ import {
     SnippetString,
     TextDocument,
 } from "vscode";
-import { attributes, functions } from "../completion";
+import { attributes, booleanSettingNames, booleanSettings, functions, stringArraySettings, stringSettings } from "../completion";
 
 export class JustCompletionItemProvider implements CompletionItemProvider {
     provideCompletionItems(document: TextDocument, position: Position, token: CancellationToken, context: CompletionContext): ProviderResult<CompletionList<CompletionItem> | CompletionItem[]> {
         switch (context.triggerKind) {
             case CompletionTriggerKind.Invoke:
-                return JustCompletionItemProvider.functions();
+                return this._provideCompletionItems(document, position);
             case CompletionTriggerKind.TriggerForIncompleteCompletions:
                 if (position.character === 0) {
                     return JustCompletionItemProvider.keywords();
                 }
-
                 return this._provideCompletionItems(document, position);
             case CompletionTriggerKind.TriggerCharacter:
                 switch (context.triggerCharacter) {
@@ -52,14 +51,33 @@ export class JustCompletionItemProvider implements CompletionItemProvider {
         const line = document.lineAt(position.line);
 
         if (line.text.startsWith("set ")) {
-            const result = new CompletionList<CompletionItem>([],);
+            const result = new CompletionList<CompletionItem>(this._provideSettingCompletionItems(document, position),);
+
+            return result;
+        }
+
+        // if (line.text.startsWith("alias ")) {
+        //     if (line.text.includes(":=")) {
+
+        //     }
+        // }
+
+        return JustCompletionItemProvider.functions();
+    }
+
+
+    private _provideSettingCompletionItems(document: TextDocument, position: Position): CompletionItem[] {
+        const line = document.lineAt(position.line);
+
+        if (line.text.startsWith("set ")) {
+            const result: CompletionItem[] = [];
 
             if (line.text.includes(":=")) {
                 const [_, _0, setting,] = line.text.split(/( |:)/, 3);
 
-                if (booleanSettings.includes(setting)) {
+                if (booleanSettingNames.includes(setting)) {
 
-                    result.items.push(
+                    result.push(
                         new CompletionItem("false", CompletionItemKind.Value),
                         new CompletionItem("true", CompletionItemKind.Value),
                     );
@@ -69,33 +87,28 @@ export class JustCompletionItemProvider implements CompletionItemProvider {
             }
 
             booleanSettings.forEach((setting) => {
-                const item = new CompletionItem(setting, CompletionItemKind.Constant);
-                // item.insertText = setting;
-                result.items.push(item);
+                const item = new CompletionItem(setting.name, CompletionItemKind.Constant);
+                item.detail = setting.detail;
+                item.insertText = new SnippetString(`${setting.name} := \${1|false,true|}`);
+                result.push(item);
             });
 
             stringSettings.forEach((setting) => {
-                const item = new CompletionItem(setting, CompletionItemKind.Constant);
-                // item.insertText = setting;
-                result.items.push(item);
+                const item = new CompletionItem(setting.name, CompletionItemKind.Constant);
+                item.detail = setting.detail;
+                item.insertText = new SnippetString(`${setting.name} := '\${1}'`);
+                result.push(item);
             });
 
             stringArraySettings.forEach((setting) => {
-                const item = new CompletionItem(setting, CompletionItemKind.Constant);
-                // item.insertText = setting;
-                result.items.push(item);
+                const item = new CompletionItem(setting.name, CompletionItemKind.Constant);
+                item.detail = setting.detail;
+                item.insertText = new SnippetString(`${setting.name} := ['\${1}']`);
+                result.push(item);
             });
 
             return result;
         }
-
-
-        // if (line.text.startsWith("alias ")) {
-        //     if (line.text.includes(":=")) {
-
-        //     }
-        // }
-
         return [];
     }
 
@@ -118,7 +131,7 @@ export class JustCompletionItemProvider implements CompletionItemProvider {
             this._keywords = keywords.map((keyword) => {
                 const item = new CompletionItem(keyword, CompletionItemKind.Keyword);
                 // item.insertText = keyword;
-                item.documentation = "";
+                // item.documentation = "";
                 return item;
             });
         }
@@ -170,28 +183,4 @@ const keywords = [
     'import',
     'export',
     'mod',
-];
-
-// https://just.systems/man/en/chapter_27.html
-
-const booleanSettings: string[] = [
-    'allow-duplicate-recipes',
-    'dotenv-load',
-    'export',
-    'fallback',
-    'ignore-comments',
-    'positional-arguments',
-    'quiet',
-    'windows-powershell',
-];
-
-const stringSettings: string[] = [
-    'dotenv-filename',
-    'dotenv-path',
-    'tempdir',
-];
-
-const stringArraySettings: string[] = [
-    'shell',
-    'windows-shell',
 ];

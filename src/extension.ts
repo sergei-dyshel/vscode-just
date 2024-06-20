@@ -1,4 +1,4 @@
-import { ExtensionContext, window, commands, languages, workspace, tasks } from 'vscode';
+import { ExtensionContext, window, commands, languages, workspace, tasks, WorkspaceConfiguration } from 'vscode';
 import {
   executeRecipe,
   executeRunCommand,
@@ -10,10 +10,9 @@ import {
   JustDocumentSymbolProvider,
   JustTaskProvider,
 } from './vscode';
-import { setJustExecutable } from './just';
+import { enableJustUnstableFeatures, setJustExecutable, setJustShell } from './just';
 import { Recipe } from './types';
 import { justfileLegend } from './vscode/documentSemanticTokensProvider';
-import { setJustShell } from './just/exec';
 
 /**
  * The channel we'll be writing our output to.
@@ -44,10 +43,7 @@ export function activate(context: ExtensionContext) {
   // the output channel we'll be writing to when we run tasks
   const outputChannel = window.createOutputChannel(OUTPUT_CHANNEL_NAME);
 
-  const justExe = workspace.getConfiguration(settingSectionID).get('justExecutable', 'just');
-  setJustExecutable(justExe);
-  const justShell = workspace.getConfiguration(settingSectionID).get('justShell', '');
-  setJustShell(justShell);
+  updateJustSettings(workspace.getConfiguration(settingSectionID));
 
   const codelensProvider = new JustCodeLensProvider();
 
@@ -67,10 +63,7 @@ export function activate(context: ExtensionContext) {
 
     workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration(settingSectionID)) {
-        const justExe = workspace.getConfiguration(settingSectionID).get('justExecutable', 'just');
-        setJustExecutable(justExe);
-        const justShell = workspace.getConfiguration(settingSectionID).get('justShell', '');
-        setJustShell(justShell);
+        updateJustSettings(workspace.getConfiguration(settingSectionID));
       }
     }),
 
@@ -96,6 +89,15 @@ export function activate(context: ExtensionContext) {
     }),
   );
 
+}
+
+function updateJustSettings(config: WorkspaceConfiguration) {
+  const justExe = config.get('justExecutable', 'just');
+  setJustExecutable(justExe);
+  const justShell = config.get('justShell', '');
+  setJustShell(justShell);
+  const justUnstableFeatures = config.get<boolean>('justUnstableFeatures', false);
+  enableJustUnstableFeatures(justUnstableFeatures);
 }
 
 /**

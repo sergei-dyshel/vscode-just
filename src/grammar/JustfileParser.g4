@@ -59,22 +59,27 @@ settingStatement       : itemDocumentation? setKeyword
 ;
 
 booleanSettingNames: AllowDuplicateRecipesSetting
+                     | AllowDuplicateVariablesSetting
                      | DotenvLoadSetting
+                     | DotenvRequiredSetting
                      | FallbackSetting
                      | IgnoreCommentsSetting
                      | PositionalArgumentsSetting
                      | QuietSetting
                      | WindowsPowershellSetting
                      | Export
+                     | NAME
 ;
 
 stringSettingNames: DotenvFilenameSetting
                    | DotenvPathSetting
                    | TempdirSetting
+                   | NAME
 ;
 
 stringSeqSettingNames: ShellSetting
                       | WindowsShellSetting
+                      | NAME
 ;
 
 moduleStatement  : itemDocumentation? modKeyword '?'? NAME stringValue?

@@ -24,6 +24,9 @@
       "include": "#functions"
     },
     {
+      "include": "#modules"
+    },
+    {
       "include": "#settings"
     },
     {
@@ -33,11 +36,11 @@
       "include": "#scripts"
     },
     {
-      "name": "keyword.control.justfile",
+      "name": "keyword.control",
       "match": "\\b(else|export|false|if|true)\\b"
     },
     {
-      "name": "keyword.operator.justfile",
+      "name": "keyword.operator",
       "match": "\\B(:=|==|&&|\\+|/)\\B"
     }
   ],
@@ -45,7 +48,7 @@
     "comments": {
       "patterns": [
         {
-          "name": "comment.line.justfile",
+          "name": "comment.line",
           "match": "^#[^!].*"
         }
       ]
@@ -53,22 +56,22 @@
     "strings": {
       "patterns": [
         {
-          "name": "string.quoted.indented_double.justfile",
+          "name": "string.quoted.indented_double",
           "begin": "\"\"\"",
           "end": "\"\"\""
         },
         {
-          "name": "string.quoted.indented_single.justfile",
+          "name": "string.quoted.indented_single",
           "begin": "'''",
           "end": "'''"
         },
         {
-          "name": "string.quoted.double.justfile",
+          "name": "string.quoted.double",
           "begin": "\"",
           "end": "\""
         },
         {
-          "name": "string.quoted.single.justfile",
+          "name": "string.quoted.single",
           "begin": "'",
           "end": "'"
         }
@@ -80,16 +83,16 @@
           "match": "^(export\\s+)?([a-zA-Z_][a-zA-Z0-9_-]*)\\s*(:=)\\s*([a-zA-Z_][a-zA-Z0-9_-]*)",
           "captures": {
             "1": {
-              "name": "keyword.control.justfile"
+              "name": "keyword.control"
             },
             "2": {
-              "name": "variable.name.justfile"
+              "name": "variable.name"
             },
             "3": {
-              "name": "keyword.operator.justfile"
+              "name": "keyword.operator"
             },
             "4": {
-              "name": "variable.name.justfile"
+              "name": "variable.name"
             }
           }
         }
@@ -101,16 +104,16 @@
           "match": "^(alias)\\s+([a-zA-Z_][a-zA-Z0-9_-]*)\\s*(:=)\\s*([a-zA-Z_][a-zA-Z0-9_-]*)",
           "captures": {
             "1": {
-              "name": "keyword.control.justfile"
+              "name": "keyword.control"
             },
             "2": {
-              "name": "variable.name.justfile"
+              "name": "variable.name"
             },
             "3": {
-              "name": "keyword.operator.justfile"
+              "name": "keyword.operator"
             },
             "4": {
-              "name": "variable.name.justfile"
+              "name": "variable.name"
             }
           }
         }
@@ -122,36 +125,36 @@
           "match": "^(@?[a-zA-Z_][a-zA-Z0-9_-]*)(\\s+[a-zA-Z_][a-zA-Z0-9=\\s_-`'\"\\{\\}]*)*(\\s+[\\+\\*]?[a-zA-Z_][a-zA-Z0-9=\\s_-`'\"\\{\\}]*)?:(\\s*[a-zA-Z_][\\sa-zA-Z0-9_-]*)*\\s*$",
           "captures": {
             "1": {
-              "name": "support.type.property-name.justfile"
+              "name": "support.type.property-name"
             },
             "2": {
-              "name": "entity.name.function.justfile"
+              "name": "entity.name.function"
             },
             "3": {
-              "name": "entity.name.function.justfile",
+              "name": "entity.name.function",
               "patterns": [
                 {
-                  "name": "constant.character.escape.justfile",
+                  "name": "constant.character.escape",
                   "match": "\\s+(\\*|\\+)?([a-zA-Z_][a-zA-Z0-9-_]*)(=?)([^\\r\\n]*)",
                   "captures": {
                     "0": {
-                      "name": "variable.name.justfile"
+                      "name": "variable.name"
                     },
                     "2": {
-                      "name": "variable.parameter.justfile"
+                      "name": "variable.parameter"
                     },
                     "3": {
-                      "name": "keyword.operator.justfile"
+                      "name": "keyword.operator"
                     },
                     "4": {
-                      "name": "variable.parameter.justfile"
+                      "name": "variable.parameter"
                     }
                   }
                 }
               ]
             },
             "4": {
-              "name": "support.type.property-name.justfile"
+              "name": "support.type.property-name"
             }
           },
           "name": "emphasis"
@@ -161,33 +164,33 @@
     "interpolate": {
       "patterns": [
         {
-          "name": "string.interpolated.justfile",
+          "name": "string.interpolated",
           "begin": "\\{\\{",
           "end": "\\}\\}",
-          "contentName": "string.interpolated.justfile"
+          "contentName": "string.interpolated"
         }
       ]
     },
     "functions": {
       "patterns": [
         {
-          "name": "support.function.justfile.nullary",
+          "name": "support.function.nullary",
           "match": "\\b(arch|invocation_directory|invocation_directory_native|just_executable|justfile|justfile_directory|num_cpus|os|os_family|uuid)\\b\\s*\\(\\s*\\)"
         },
         {
-          "name": "support.function.justfile.unary",
+          "name": "support.function.unary",
           "match": "\\b(absolute_path|capitalize|clean|env_var|error|kebabcase|lowercamelcase|lowercase|parent_directory|path_exists|quote|extension|file_name|file_stem|sha256|sha256_file|shoutykebabcase|shoutysnakecase|snakecase|titlecase|trim|trim_end|trim_start|uppercamelcase|uppercase|without_extension)\\b"
         },
         {
-          "name": "support.function.justfile.binary",
+          "name": "support.function.binary",
           "match": "\\b(env_var_or_default|semver_matches|trim_end_match|trim_end_matches|trim_start_match|trim_start_matches)\\b"
         },
         {
-          "name": "support.function.justfile.ternary",
+          "name": "support.function.ternary",
           "match": "\\b(replace|replace_regex)\\b"
         },
         {
-          "name": "support.function.justfile.other",
+          "name": "support.function.other",
           "match": "\\b(env|join)\\b"
         }
       ]
@@ -195,35 +198,28 @@
     "settings": {
       "patterns": [
         {
-          "match": "(set)\\s+(allow\\-duplicate\\-recipes|dotenv\\-filename|dotenv\\-load|dotenv\\-path|export|fallback|ignore\\-comments|positional\\-arguments|windows\\-powershell)(\\s*:=\\s*)?",
+          "match": "^(set)\\s+([a-zA-Z_][a-zA-Z0-9_-]*)(\\s*:=\\s*)?",
           "captures": {
             "1": {
-              "name": "keyword.control.justfile"
+              "name": "keyword.control"
             },
             "2": {
-              "name": "keyword.other.boolean.justfile"
+              "name": "support.variable"
             }
           }
-        },
+        }
+      ]
+    },
+    "modules": {
+      "patterns": [
         {
-          "match": "(set)\\s+*(dotenv\\-filename|dotenv\\-path|tempdir)\\s*+:=\\s*",
+          "match": "^(mod\\??)\\s+([a-zA-Z_][a-zA-Z0-9_-]*)",
           "captures": {
             "1": {
-              "name": "keyword.control.justfile"
+              "name": "keyword.control"
             },
             "2": {
-              "name": "keyword.other.string.justfile"
-            }
-          }
-        },
-        {
-          "match": "(set)\\s+(shell|windows\\-shell)\\s*+:=\\s*",
-          "captures": {
-            "1": {
-              "name": "keyword.control.justfile"
-            },
-            "2": {
-              "name": "keyword.other.shell.justfile"
+              "name": "entity.name.section"
             }
           }
         }
@@ -275,7 +271,7 @@
     "script_indent_shell": {
       "patterns": [
         {
-          "name": "markup.fenced_code.block.indented_backtick.justfile",
+          "name": "markup.fenced_code.block.indented_backtick",
           "begin": "```",
           "end": "```",
           "contentName": "meta.embedded.block.javascript",
@@ -290,7 +286,7 @@
     "script_inline_shell": {
       "patterns": [
         {
-          "name": "markup.fenced_code.block.backtick.justfile",
+          "name": "markup.fenced_code.block.backtick",
           "begin": "`",
           "end": "`",
           "contentName": "meta.embedded.block.javascript",

@@ -59,16 +59,18 @@ fragment SingleQuote:     '\'';
 
 
 // Settings
-AllowDuplicateRecipesSetting:  'allow-duplicate-recipes';
-DotenvLoadSetting:             'dotenv-load';
-FallbackSetting:               'fallback';
-IgnoreCommentsSetting:         'ignore-comments';
-PositionalArgumentsSetting:    'positional-arguments';
-QuietSetting:                  'quiet';
-WindowsPowershellSetting:      'windows-powershell';
+AllowDuplicateRecipesSetting:    'allow-duplicate-recipes';
+AllowDuplicateVariablesSetting:  'allow-duplicate-variables';
+DotenvLoadSetting:               'dotenv-load';
+FallbackSetting:                 'fallback';
+IgnoreCommentsSetting:           'ignore-comments';
+PositionalArgumentsSetting:      'positional-arguments';
+QuietSetting:                    'quiet';
+WindowsPowershellSetting:        'windows-powershell';
 
 DotenvFilenameSetting:   'dotenv-filename';
 DotenvPathSetting:       'dotenv-path';
+DotenvRequiredSetting:   'dotenv-required';
 TempdirSetting:          'tempdir';
 ShellSetting:            'shell';
 WindowsShellSetting:     'windows-shell';

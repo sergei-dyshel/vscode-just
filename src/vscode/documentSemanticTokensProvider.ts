@@ -50,8 +50,6 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 					this._pushSemanticTerminalNodeToken(builder, comment, "comment");
 				});
 
-				const settingName = settings.stringSettingNames() || settings.stringSeqSettingNames() || settings.booleanSettingNames();
-				this._pushSemanticToken(builder, settingName, "property", ['modification'],);
 				return;
 			}
 
@@ -123,7 +121,7 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 				case "BooleanSettingNamesContext":
 				case "StringSettingNamesContext":
 				case "StringSeqSettingNamesContext":
-					this._pushSemanticToken(builder, pt, "macro");
+					// this._pushSemanticToken(builder, pt, "macro");
 					return;
 				case "FunctionLeftContext":
 				case "FunctionRightContext":
@@ -146,7 +144,7 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 				const name = pt.NAME();
 				if (name) {
 					this._pushSemanticTerminalNodeToken(builder, pt.NAME(), "variable");
-					return;
+					// return;
 				}
 			}
 
@@ -155,11 +153,15 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 			});
 		} else if (pt instanceof TerminalNode) {
 			switch (pt.symbol.type) {
-				case JustfileLexer.INDENTED_RAW_STRING:
 				case JustfileLexer.INDENTED_STRING:
+				case JustfileLexer.INDENTED_BACKTICK:
 				case JustfileLexer.RAW_STRING:
 				case JustfileLexer.STRING:
 					this._pushSemanticTerminalNodeToken(builder, pt, "string");
+					break;				
+				case JustfileLexer.INDENTED_RAW_STRING:
+				case JustfileLexer.BACKTICK:
+					this._pushSemanticTerminalNodeToken(builder, pt, "method");
 					break;
 				case JustfileLexer.Set:
 				case JustfileLexer.Alias:
@@ -169,7 +171,6 @@ export class JustDocumentSemanticTokensProvider implements DocumentSemanticToken
 				case JustfileLexer.Else:
 					this._pushSemanticTerminalNodeToken(builder, pt, "keyword");
 					break;
-
 				case JustfileLexer.Assign:
 				case JustfileLexer.EqualsEquals:
 				case JustfileLexer.EqualsTilde:

@@ -1,3 +1,11 @@
+# 2.0.2 - Jun 20, 2024
+
+* Feature: CodeLens
+* Feature: Semantic Token Provider
+* Feature: Call Hierarchy Provider
+* Feature: CompletionItemProvider
+* Feature: Parser base on Antlr
+
 # 1.0.3 - Dec 4, 2017
 
 ### Docs
