@@ -1,5 +1,5 @@
 import { CancellationToken, CodeLens, ProviderResult, Disposable, workspace, CodeLensProvider, EventEmitter, Event, TextDocument, Position } from 'vscode';
-import { getRecipeName, getRecipes, parseJustfile } from '../grammar';
+import { getRecipeName, getRecipes, parseJustfile, recipeRequireAdditionalParameters } from '../grammar';
 import { dirname } from 'path';
 
 /**
@@ -35,6 +35,11 @@ export class JustCodeLensProvider implements CodeLensProvider, Disposable {
             const ctx = parseJustfile(justfile);
 
             getRecipes(ctx).forEach((recipe) => {
+                // Skip recipes that require additional parameters
+                if (recipeRequireAdditionalParameters(recipe)) {
+                    return;
+                }
+                // Get the recipe name
                 const recipeName = recipe.recipeName();
                 const pos = new Position(recipeName.start.line - 1, recipeName.start.column);
 

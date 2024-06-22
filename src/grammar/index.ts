@@ -109,14 +109,42 @@ export interface DocumentationItem {
     itemDocumentation(): ItemDocumentationContext
 }
 
+/**
+ * List all comments in a item.
+ * @param item The item to list comments for.
+ * @returns The list of comments.
+ */
 export function listComments(item: DocumentationItem): Array<TerminalNode> {
     const comments: Array<TerminalNode> = [];
     const doc = item.itemDocumentation();
     if (doc) {
         doc.COMMENT_list()?.forEach((comment) => {
             comments.push(comment);
-            // this._pushSemanticTerminalNodeToken(builder, comment, "comment");
         });
     }
     return comments;
+}
+
+/**
+ * Check if a recipe requires additional parameters.
+ * @param ctx The recipe context to check.
+ * @returns True if the recipe requires additional parameters, false otherwise.
+ */
+export function recipeRequireAdditionalParameters(recipe: RecipeContext): boolean {
+    const variadic = recipe.variadic();
+    if (variadic) {
+        if (variadic.variadicModifier().Plus()) {
+            return true;
+        }
+    }
+
+    const parameters = recipe.parameter_list();
+    if (parameters) {
+        return parameters.some((param) => {
+            if (!param.Equal()) {
+                return true;
+            }
+        });
+    }
+    return false;
 }

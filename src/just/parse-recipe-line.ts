@@ -1,4 +1,4 @@
-import { Argument, Recipe, Variable as Variables } from '../types';
+import { Recipe } from '../types';
 
 /**
  * Parse one of the lines when running `just --list` into a JustRecipe.
